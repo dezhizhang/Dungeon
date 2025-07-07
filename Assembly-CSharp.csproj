@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/Player.cs" />
     <Compile Include="Assets/Simple 2D Platformer BE2/ReadMe/Scripts/ReadmeBE2.cs" />
+    <Compile Include="Assets/Scripts/StudyPlayer.cs" />
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/6000.0.41f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

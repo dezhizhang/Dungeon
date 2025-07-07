@@ -4,10 +4,11 @@ public class Player : MonoBehaviour
 {
     // 玩家物体
     public GameObject player;
-
+    // 玩家移动的方向
     public Vector2 playerDir;
-
-    // Update is called once per frame
+    // 玩家刚体
+    public Rigidbody2D rb;
+    
     void Update()
     {
         PlayerMove();
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            player.transform.Translate(playerDir * Time.deltaTime);
+            rb.AddForce(playerDir);
         }
     }
 }
