@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1310218212}
-  playerAnimator: {fileID: 0}
+  playerAnimator: {fileID: 1310218213}
   isRight: 1
   playerSprite: {fileID: 67526304}
 --- !u!4 &1310218210

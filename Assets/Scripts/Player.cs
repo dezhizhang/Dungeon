@@ -16,9 +16,9 @@ public class Player : MonoBehaviour
 
     // 定义玩家朝向
     public bool isRight = true;
+
     // 玩家转向
     public SpriteRenderer playerSprite;
-
 
     private void Update()
     {
@@ -38,17 +38,28 @@ public class Player : MonoBehaviour
     {
         // 获取鼠标输入
         _xInput = Input.GetAxisRaw("Horizontal");
-        // 设置玩家动画
-        if (_xInput != 0 && isRight)
+        
+        // 判断玩家是否在移动
+        if (_xInput != 0 && !playerAnimator.GetBool("IsRun"))
         {
             playerAnimator.SetBool("IsRun", true);
+
+            // 判断玩家是否向右移动
+            if (_xInput > 0 && isRight == false)
+            {
+                isRight = true;
+                playerSprite.flipX = false;
+            }
+            else if (_xInput < 0 && isRight)
+            {
+                // 角色默认朝右
+                isRight = false;
+                playerSprite.flipX = true;
+            }
         }
-        else if (_xInput != 0)
+        else if (playerAnimator.GetBool("IsRun"))
         {
-        }
-        else
-        {
-            playerAnimator.SetBool("IsRun", false);
+            playerAnimator.SetBool("IsRun",false);
         }
     }
 
