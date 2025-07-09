@@ -19,10 +19,20 @@ public class Player : MonoBehaviour
 
     // 玩家转向
     public SpriteRenderer playerSprite;
+    
+    [Header("PlayerJump")]
+    public float jumpForce = 5;
+
+
+    private void Start()
+    {
+        
+    }
 
     private void Update()
     {
         PlayerMove();
+        PlayerJump();
     }
 
 
@@ -70,5 +80,14 @@ public class Player : MonoBehaviour
     private void FixPlayerMove()
     {
         rb.linearVelocity = new Vector2(_xInput * _speed, rb.linearVelocityY);
+    }
+
+    private void PlayerJump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        {
+            // 刚体向上跳跃
+            rb.AddForce(new Vector2(rb.linearVelocityX, jumpForce));
+        }
     }
 }
