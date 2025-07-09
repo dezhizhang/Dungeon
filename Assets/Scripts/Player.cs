@@ -19,20 +19,21 @@ public class Player : MonoBehaviour
 
     // 玩家转向
     public SpriteRenderer playerSprite;
-    
-    [Header("PlayerJump")]
-    public float jumpForce = 5;
 
+    [Header("PlayerJump")] public float jumpForce = 400;
 
-    private void Start()
-    {
-        
-    }
+    // 玩家对像
+    public GameObject playerGo;
+    public LayerMask groundLayer;
+    public bool isGround = true;
+
 
     private void Update()
     {
         PlayerMove();
         PlayerJump();
+        // 检测地面
+        CheckGround();
     }
 
 
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
     {
         // 获取鼠标输入
         _xInput = Input.GetAxisRaw("Horizontal");
-        
+
         // 判断玩家是否在移动
         if (_xInput != 0 && !playerAnimator.GetBool("IsRun"))
         {
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
         }
         else if (playerAnimator.GetBool("IsRun"))
         {
-            playerAnimator.SetBool("IsRun",false);
+            playerAnimator.SetBool("IsRun", false);
         }
     }
 
@@ -88,6 +89,23 @@ public class Player : MonoBehaviour
         {
             // 刚体向上跳跃
             rb.AddForce(new Vector2(rb.linearVelocityX, jumpForce));
+            playerAnimator.SetTrigger("IsJump");
+        }
+    }
+
+    private void CheckGround()
+    {
+        Vector3 startPos = playerGo.transform.position;
+        Vector2 endPos = playerGo.transform.position + Vector3.down * 0.5f;
+        RaycastHit2D hit = Physics2D.Linecast(startPos, endPos, groundLayer);
+
+        if (hit.collider != null)
+        {
+            isGround = true;
+        }
+        else
+        {
+            isGround = false;
         }
     }
 }
