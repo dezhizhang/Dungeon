@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 39212287}
   - component: {fileID: 39212286}
   - component: {fileID: 39212285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +590,7 @@ MonoBehaviour:
   isRight: 1
   playerSprite: {fileID: 712885163}
   jumpForce: 5
-  playerGo: {fileID: 0}
+  playerGo: {fileID: 1310218208}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
