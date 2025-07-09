@@ -87,12 +87,18 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
         {
-            // 刚体向上跳跃
-            rb.AddForce(new Vector2(rb.linearVelocityX, jumpForce));
-            playerAnimator.SetTrigger("IsJump");
+            if (isGround)
+            {
+                // 刚体向上跳跃
+                rb.AddForce(new Vector2(rb.linearVelocityX, jumpForce));
+                playerAnimator.SetTrigger("IsJump");
+            }
         }
     }
 
+    /// <summary>
+    /// 检测是否在地面上
+    /// </summary>
     private void CheckGround()
     {
         Vector3 startPos = playerGo.transform.position;
