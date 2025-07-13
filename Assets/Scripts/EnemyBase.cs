@@ -17,7 +17,10 @@ public enum EnemyState
 
 public class EnemyBase : MonoBehaviour
 {
-    [Header("Enemy Move")] public Transform left;
+    [Header("Enemy Move")] 
+    // 当前状态
+    public EnemyState currentState = EnemyState.Patrol;
+    public Transform left;
 
     public Transform right;
 
@@ -27,11 +30,12 @@ public class EnemyBase : MonoBehaviour
     // 怪物移动的速度
     public float speed = 1f;
 
+    // 怪物是否可以移动
+    public bool canMove = true;
+
     // 添加刚体
     public Rigidbody2D rb;
-
-    // 当前状态
-    [HideInInspector] public EnemyState currentState = EnemyState.Patrol;
+    
 
     public virtual void Start()
     {
@@ -62,12 +66,21 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
+        if (canMove)
+        {
+            rb.linearVelocityX = (isRight ? 1 : -1) * speed;
+        }
+        else
+        {
+            rb.linearVelocityX = 0;
+        }
     }
 
     #region 状态机
 
     public virtual void IdleEnter()
     {
+        canMove = false;
     }
 
     public virtual void IdleUpdate()
@@ -85,6 +98,11 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void PatrolUpdate()
     {
+        if (transform.position.x <= left.position.x && !isRight)
+        {
+            // 切换到暂停状态
+            ChangeCurrentState(EnemyState.Idle);
+        }
     }
 
     public virtual void PatrolExit()
@@ -143,7 +161,7 @@ public class EnemyBase : MonoBehaviour
     #endregion
 
     // 态态机切换
-    public virtual void ChangeCurState(EnemyState state)
+    public virtual void ChangeCurrentState(EnemyState state)
     {
         switch (currentState)
         {
