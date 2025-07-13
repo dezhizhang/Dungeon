@@ -23,6 +23,8 @@ public class EnemyBase : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
 
+    public Animator enemyAnimator;
+
 
     [Header("Enemy Patrol")]
 
@@ -102,6 +104,7 @@ public class EnemyBase : MonoBehaviour
     {
         canMove = false;
         // 播放待机动画
+        enemyAnimator.SetBool("IsRun", false);
         Invoke(nameof(ChangeIdleToPatrolState), idleTime);
     }
 
@@ -120,6 +123,7 @@ public class EnemyBase : MonoBehaviour
     public virtual void PatrolEnter()
     {
         canMove = true;
+        enemyAnimator.SetBool("IsRun", true);
     }
 
     public virtual void PatrolUpdate()
