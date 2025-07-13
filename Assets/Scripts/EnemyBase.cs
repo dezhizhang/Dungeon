@@ -173,6 +173,19 @@ public class EnemyBase : MonoBehaviour
 
     public virtual void PursuitUpdate()
     {
+        if (player == null)
+        {
+            if (player.transform.position.x <= transform.position.x)
+            {
+                isRight = false;
+                spriteRenderer.flipX = isRight;
+            }
+            else
+            {
+                isRight = true;
+                spriteRenderer.flipX = isRight;
+            }
+        }
     }
 
     public virtual void PursuitExit()
