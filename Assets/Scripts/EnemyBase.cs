@@ -17,9 +17,18 @@ public enum EnemyState
 
 public class EnemyBase : MonoBehaviour
 {
-    [Header("Enemy Move")] 
+    [Header("Enemy Idle")]
+    // 等持动画时间
+    public float idleTime = 2f;
+
+    public SpriteRenderer spriteRenderer;
+
+
+    [Header("Enemy Patrol")]
+
     // 当前状态
     public EnemyState currentState = EnemyState.Patrol;
+
     public Transform left;
 
     public Transform right;
@@ -35,7 +44,7 @@ public class EnemyBase : MonoBehaviour
 
     // 添加刚体
     public Rigidbody2D rb;
-    
+
 
     public virtual void Start()
     {
@@ -64,6 +73,17 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 切换状态
+    /// </summary>
+    public virtual void ChangeIdleToPatrolState()
+    {
+        isRight = !isRight;
+        // 向右移动
+        spriteRenderer.flipX = isRight;
+        ChangeCurrentState(EnemyState.Patrol);
+    }
+
     public virtual void FixedUpdate()
     {
         if (canMove)
@@ -81,6 +101,8 @@ public class EnemyBase : MonoBehaviour
     public virtual void IdleEnter()
     {
         canMove = false;
+        // 播放待机动画
+        Invoke(nameof(ChangeIdleToPatrolState), idleTime);
     }
 
     public virtual void IdleUpdate()
@@ -92,8 +114,12 @@ public class EnemyBase : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 巡逻
+    /// </summary>
     public virtual void PatrolEnter()
     {
+        canMove = true;
     }
 
     public virtual void PatrolUpdate()
@@ -101,6 +127,10 @@ public class EnemyBase : MonoBehaviour
         if (transform.position.x <= left.position.x && !isRight)
         {
             // 切换到暂停状态
+            ChangeCurrentState(EnemyState.Idle);
+        }
+        else if (transform.position.x >= right.position.x && isRight)
+        {
             ChangeCurrentState(EnemyState.Idle);
         }
     }
