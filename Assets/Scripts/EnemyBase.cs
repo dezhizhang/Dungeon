@@ -16,12 +16,26 @@ public enum EnemyState
 
 public class EnemyBase : MonoBehaviour
 {
+    [Header("Enemy Move")] 
+    public Transform left;
+
+    public Transform right;
+
+    // 怪物移动方向
+    public bool isRight = false;
+
+    // 怪物移动的速度
+    public float speed = 1f;
+
+    // 添加刚体
+    public Rigidbody2D rb;
+
     // 当前状态
-    public EnemyState currentState = EnemyState.Patrol;
+    [HideInInspector] public EnemyState currentState = EnemyState.Patrol;
 
     public virtual void Start()
     {
-        Debug.Log("EnemyBase Start");
+        PatrolEnter();
     }
 
     public void Update()
@@ -44,6 +58,10 @@ public class EnemyBase : MonoBehaviour
                 DeathUpdate();
                 break;
         }
+    }
+
+    public virtual void FixedUpdate()
+    {
     }
 
     #region 状态机
