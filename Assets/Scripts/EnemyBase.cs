@@ -47,6 +47,10 @@ public class EnemyBase : MonoBehaviour
     // 添加刚体
     public Rigidbody2D rb;
 
+    [Header("Enemy Pursuit")]
+    // 击状态
+    public GameObject player;
+
 
     public virtual void Start()
     {
@@ -83,6 +87,25 @@ public class EnemyBase : MonoBehaviour
         isRight = !isRight;
         // 向右移动
         spriteRenderer.flipX = isRight;
+        ChangeCurrentState(EnemyState.Patrol);
+    }
+
+    /// <summary>
+    /// 查找玩家
+    /// </summary>
+    public virtual void FindPlayer(GameObject mainPlayer)
+    {
+        player = mainPlayer;
+        // 更新玩家状态
+        ChangeCurrentState(EnemyState.Pursuit);
+    }
+
+    /// <summary>
+    /// 玩家退出状态
+    /// </summary>
+    public virtual void PlayerOut()
+    {
+        // 切换玩家状态为巡逻状态
         ChangeCurrentState(EnemyState.Patrol);
     }
 
