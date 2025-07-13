@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public enum EnemyState
 {
+    Idle, // 静态状态
     Patrol, // 巡逻状态
     Pursuit, // 所击状态
     Attack, // 攻击
@@ -16,8 +17,7 @@ public enum EnemyState
 
 public class EnemyBase : MonoBehaviour
 {
-    [Header("Enemy Move")] 
-    public Transform left;
+    [Header("Enemy Move")] public Transform left;
 
     public Transform right;
 
@@ -65,6 +65,19 @@ public class EnemyBase : MonoBehaviour
     }
 
     #region 状态机
+
+    public virtual void IdleEnter()
+    {
+    }
+
+    public virtual void IdleUpdate()
+    {
+    }
+
+    public virtual void IdleExit()
+    {
+    }
+
 
     public virtual void PatrolEnter()
     {
@@ -134,6 +147,9 @@ public class EnemyBase : MonoBehaviour
     {
         switch (currentState)
         {
+            case EnemyState.Idle:
+                IdleExit();
+                break;
             case EnemyState.Patrol:
                 PatrolExit();
                 break;
@@ -154,6 +170,9 @@ public class EnemyBase : MonoBehaviour
         currentState = state;
         switch (state)
         {
+            case EnemyState.Idle:
+                IdleEnter();
+                break;
             case EnemyState.Patrol:
                 PatrolEnter();
                 break;
