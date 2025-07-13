@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public GameObject playerGo;
     public LayerMask groundLayer;
     public bool isGround = true;
+    // 是否在跳跃中
+    public bool isJump = false;
 
 
     private void Update()
@@ -93,6 +95,11 @@ public class Player : MonoBehaviour
                 rb.AddForce(new Vector2(rb.linearVelocityX, jumpForce));
                 playerAnimator.SetTrigger("IsJump");
             }
+        }
+
+        if (isGround)
+        {
+            playerAnimator.SetTrigger("IsGround");
         }
     }
 
